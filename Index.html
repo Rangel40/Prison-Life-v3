@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PRISON LIFE V3 - Foro Oficial</title>
+  <style>
+    /* ====== ESTILOS GENERALES ====== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #0a0a0a 20%, #000814 80%);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 50px;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      color: #00bfff;
+      text-shadow: 0 0 15px #00bfff, 0 0 30px #0077ff;
+      letter-spacing: 3px;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #0077ff; }
+      to { text-shadow: 0 0 25px #00bfff, 0 0 50px #0077ff; }
+    }
+
+    /* ====== BOTONES SUPERIORES (LOGIN / REGISTER) ====== */
+    .auth-buttons {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .auth-btn, .login-btn, .music-btn {
+      background-color: transparent;
+      border: 2px solid #00bfff;
+      color: #00bfff;
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .auth-btn:hover, .login-btn:hover, .music-btn:hover {
+      background-color: #00bfff;
+      color: #000;
+      box-shadow: 0 0 10px #00bfff, 0 0 20px #0077ff;
+      transform: scale(1.05);
+    }
+
+    /* ====== BANNER ====== */
+    .banner {
+      width: 85%;
+      max-width: 1000px;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 0 25px rgba(0, 191, 255, 0.4);
+      margin-bottom: 40px;
+    }
+
+    .banner img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* ====== BOTONES PRINCIPALES ====== */
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .btn {
+      background-color: #001a33;
+      border: 2px solid #00bfff;
+      color: #00bfff;
+      padding: 12px 30px;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #00bfff;
+      color: #000;
+      box-shadow: 0 0 20px #00bfff, 0 0 40px #0077ff;
+      transform: scale(1.05);
+    }
+
+    footer {
+      position: absolute;
+      bottom: 15px;
+      text-align: center;
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        gap: 15px;
+      }
+      header h1 {
+        font-size: 2.2rem;
+      }
+      .auth-buttons {
+        flex-direction: row;
+      }
+      .btn {
+        font-size: 1rem;
+        padding: 10px 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>PRISON LIFE V3</h1>
+    <div class="auth-buttons">
+      <button class="music-btn" id="musicToggle">🔊 Música</button>
+      <a href="login.html" class="login-btn">Iniciar sesión</a>
+      <a href="registrer.html" class="auth-btn">Registrarse</a>
+    </div>
+  </header>
+
+  <div class="banner">
+    <img src="prison.jpg" alt="Banner Prison Life" />
+  </div>
+
+  <div class="buttons">
+    <button class="btn" onclick="goTo('play')">Jugar Ahora</button>
+    <button class="btn" onclick="goTo('news')">Novedades</button>
+    <button class="btn" onclick="goTo('shop')">Comprar Pases</button>
+    <button class="btn" onclick="goTo('forum')">Foro</button>
+  </div>
+
+  <footer>
+    © 2025 PRISON LIFE V3 - Comunidad Oficial del Juego
+  </footer>
+
+  <!-- 🎵 MÚSICA DE FONDO -->
+  <audio id="bgMusic" src="Xomada.mp3" loop></audio>
+
+  <script>
+    // ====== BOTONES DE NAVEGACIÓN ======
+    function goTo(section) {
+      switch (section) {
+        case 'play':
+          alert('Aquí irá el enlace al juego o servidor.');
+          break;
+        case 'news':
+          window.location.href = "news.html";
+          break;
+        case 'shop':
+          window.location.href = "shop.html";
+          break;
+        case 'forum':
+          window.location.href = "foro.html";
+          break;
+        default:
+          console.log('Botón no reconocido.');
+      }
+    }
+
+    // ====== SISTEMA DE USUARIO GLOBAL ======
+    document.addEventListener("DOMContentLoaded", () => {
+      const username = localStorage.getItem("username");
+      const loginBtn = document.querySelector(".login-btn");
+
+      if (username && loginBtn) {
+        loginBtn.textContent = `👤 ${username}`;
+        loginBtn.href = "#"; // Evita ir al login si ya está logueado
+        loginBtn.style.cursor = "default";
+      }
+    });
+
+    // ====== CONTROL DE MÚSICA ======
+    const bgMusic = document.getElementById("bgMusic");
+    const musicToggle = document.getElementById("musicToggle");
+
+    let isPlaying = false;
+
+    musicToggle.addEventListener("click", () => {
+      if (isPlaying) {
+        bgMusic.pause();
+        musicToggle.textContent = "🔇 Música";
+      } else {
+        bgMusic.play().catch(err => console.warn("Autoplay bloqueado por el navegador"));
+        musicToggle.textContent = "🔊 Música";
+      }
+      isPlaying = !isPlaying;
+    });
+
+    // Inicia automáticamente (si el navegador lo permite)
+    window.addEventListener("load", () => {
+      bgMusic.volume = 0.5;
+      bgMusic.play().catch(() => {
+        console.log("El navegador bloqueó la reproducción automática. El usuario debe activarla.");
+      });
+    });
+  </script>
+</body>
+</html>

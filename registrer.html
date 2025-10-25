@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Registrarse - PRISON LIFE V3</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:"Poppins",sans-serif}
+    body{
+      background:radial-gradient(circle at top,#0a0a0a 20%,#000814 80%);
+      color:#fff;display:flex;align-items:center;justify-content:center;height:100vh;
+    }
+    .register-box{
+      background:rgba(0,26,51,0.9);
+      border:2px solid #00bfff;border-radius:20px;padding:36px;width:92%;max-width:450px;
+      text-align:center;box-shadow:0 0 30px rgba(0,191,255,0.35);animation:fadeIn .6s ease;
+    }
+    @keyframes fadeIn{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:none}}
+    h2{color:#00bfff;margin-bottom:18px;text-shadow:0 0 10px #00bfff}
+    .field{width:100%;margin:10px 0}
+    input{
+      width:100%;padding:10px 14px;border-radius:20px;border:1px solid #00bfff;background:rgba(255,255,255,0.04);
+      color:#fff;font-size:1rem;outline:none;text-align:center;
+    }
+    input::placeholder{color:#9fbfe8}
+    button{
+      margin-top:12px;width:100%;padding:12px;border-radius:24px;border:2px solid #00bfff;
+      background:#001a33;color:#00bfff;font-weight:700;cursor:pointer;text-transform:uppercase;
+      transition:all .18s ease;
+    }
+    button:hover{background:#00bfff;color:#000;box-shadow:0 0 20px #00bfff;transform:scale(1.02)}
+    .helper{margin-top:14px;color:#9fbfe8;font-size:.95rem}
+    .helper a{color:#00ffff;font-weight:700;text-decoration:none}
+    .helper a:hover{text-decoration:underline}
+    .small{font-size:.88rem;color:#bcdfff;margin-top:8px}
+    footer{position:fixed;left:0;right:0;bottom:12px;text-align:center;color:#9fbfe8;font-size:.85rem}
+  </style>
+</head>
+<body>
+  <main class="register-box" role="main" aria-labelledby="title">
+    <h2 id="title">Crear cuenta — PRISON LIFE V3</h2>
+
+    <div class="field">
+      <input id="robloxProfile" placeholder="Pega aquí tu enlace de perfil de Roblox" aria-label="Enlace de perfil de Roblox" />
+    </div>
+
+    <div class="field">
+      <input id="password" type="password" placeholder="Contraseña" aria-label="Contraseña" />
+    </div>
+
+    <div class="field">
+      <input id="confirmPassword" type="password" placeholder="Confirmar contraseña" aria-label="Confirmar contraseña" />
+    </div>
+
+    <button id="registerBtn">Registrarme</button>
+
+    <div class="helper">
+      ¿Ya tienes cuenta? <a href="login.html">Inicia sesión aquí</a>
+    </div>
+
+    <div class="small" id="status" aria-live="polite" role="status"></div>
+  </main>
+
+  <footer>© 2025 PRISON LIFE V3</footer>
+
+  <script>
+    // 🔍 Extraer ID desde diferentes formatos de URL de Roblox
+    function extractRobloxIdFromUrl(url) {
+      if (!url) return null;
+      try {
+        url = url.trim();
+        // Si solo es un número
+        if (/^\d+$/.test(url)) return url;
+
+        // Quitar el dominio para reducir complejidad
+        url = url.replace("https://www.roblox.com", "")
+                 .replace("http://www.roblox.com", "")
+                 .replace("https://roblox.com", "")
+                 .replace("http://roblox.com", "");
+
+        // Soporta: /es/users/123456/profile, /users/123456/profile, /profiles/123456, /u/123456
+        const match = url.match(/(?:\/[a-z]{2})?\/?(?:users|u|profile|profiles)\/(\d+)/i);
+        if (match && match[1]) return match[1];
+
+        // Buscar parámetro id=
+        const param = url.match(/[?&]id=(\d+)/);
+        if (param && param[1]) return param[1];
+
+        // Último intento: cualquier número largo
+        const anyNum = url.match(/(\d{5,})/);
+        return anyNum ? anyNum[1] : null;
+      } catch {
+        return null;
+      }
+    }
+
+    // 🧠 Consultar nombre real en Roblox
+    async function getRobloxName(userId) {
+      try {
+        const res = await fetch(`https://users.roblox.com/v1/users/${userId}`);
+        if (!res.ok) return null;
+        const data = await res.json();
+        return data.name || null;
+      } catch {
+        return null;
+      }
+    }
+
+    const statusEl = document.getElementById("status");
+    const btn = document.getElementById("registerBtn");
+
+    async function registrarUsuario() {
+      statusEl.textContent = "";
+      btn.disabled = true;
+      btn.textContent = "Verificando...";
+
+      const profileUrl = document.getElementById("robloxProfile").value.trim();
+      const pwd = document.getElementById("password").value;
+      const pwd2 = document.getElementById("confirmPassword").value;
+
+      if (!profileUrl || !pwd || !pwd2) {
+        alert("Por favor, completa todos los campos.");
+        resetBtn();
+        return;
+      }
+      if (pwd !== pwd2) {
+        alert("Las contraseñas no coinciden.");
+        resetBtn();
+        return;
+      }
+
+      const userId = extractRobloxIdFromUrl(profileUrl);
+      if (!userId) {
+        alert("No se pudo reconocer el enlace de Roblox. Asegúrate de pegar tu enlace completo.");
+        resetBtn();
+        return;
+      }
+
+      statusEl.textContent = "Verificando perfil en Roblox...";
+
+      const robloxName = await getRobloxName(userId);
+      if (!robloxName) {
+        alert("❌ No se encontró ese perfil en Roblox. Verifica que el enlace sea correcto.");
+        resetBtn();
+        return;
+      }
+
+      // ✅ Guardar usuario real
+      let usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
+      if (usuarios.some(u => u.robloxId === userId)) {
+        alert("⚠️ Este perfil ya está registrado.");
+        resetBtn();
+        return;
+      }
+
+      usuarios.push({ robloxId: userId, robloxName, password: pwd });
+      localStorage.setItem("usuarios", JSON.stringify(usuarios));
+      localStorage.setItem("username", robloxName);
+
+      alert(`✅ Registro exitoso. Bienvenido, ${robloxName}!`);
+      window.location.href = "index.html";
+    }
+
+    function resetBtn() {
+      btn.disabled = false;
+      btn.textContent = "Registrarme";
+      statusEl.textContent = "";
+    }
+
+    btn.addEventListener("click", registrarUsuario);
+    document.querySelectorAll("input").forEach(i =>
+      i.addEventListener("keydown", e => {
+        if (e.key === "Enter") registrarUsuario();
+      })
+    );
+  </script>
+</body>
+</html>

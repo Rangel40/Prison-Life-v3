@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tienda de Pases - PRISON LIFE V3</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #0a0a0a 20%, #000814 80%);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+      padding-bottom: 50px;
+    }
+
+    header {
+      width: 100%;
+      padding: 20px 0;
+      text-align: center;
+      position: relative;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      color: #00bfff;
+      text-shadow: 0 0 15px #00bfff, 0 0 30px #0077ff;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #0077ff; }
+      to { text-shadow: 0 0 25px #00bfff, 0 0 50px #0077ff; }
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 15px;
+    }
+
+    nav button {
+      background-color: transparent;
+      border: 2px solid #00bfff;
+      color: #00bfff;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+
+    nav button:hover {
+      background-color: #00bfff;
+      color: #000;
+      box-shadow: 0 0 20px #00bfff, 0 0 40px #0077ff;
+      transform: scale(1.05);
+    }
+
+    .user-info {
+      position: absolute;
+      top: 25px;
+      right: 30px;
+      font-size: 1rem;
+      color: #00bfff;
+      background: rgba(0, 26, 51, 0.5);
+      padding: 8px 15px;
+      border-radius: 20px;
+      border: 1px solid #00bfff;
+      display: none;
+    }
+
+    .shop-container {
+      width: 90%;
+      max-width: 1000px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      margin-top: 40px;
+      justify-items: center;
+    }
+
+    .card {
+      background-color: rgba(0, 26, 51, 0.7);
+      border: 2px solid #00bfff;
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0, 191, 255, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      width: 100%;
+      max-width: 280px;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 30px rgba(0, 191, 255, 0.5);
+    }
+
+    .card h2 {
+      color: #00bfff;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: #ddd;
+      margin-bottom: 15px;
+    }
+
+    .price {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #00ffff;
+      margin-bottom: 15px;
+    }
+
+    .buy-btn {
+      background-color: #001a33;
+      border: 2px solid #00bfff;
+      color: #00bfff;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+
+    .buy-btn:hover {
+      background-color: #00bfff;
+      color: #000;
+      box-shadow: 0 0 20px #00bfff, 0 0 40px #0077ff;
+      transform: scale(1.05);
+    }
+
+    footer {
+      margin-top: 60px;
+      text-align: center;
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🛒 Tienda de Pases</h1>
+    <div class="user-info" id="userInfo">Bienvenido, <span id="userName"></span> 👋</div>
+    
+    <nav>
+      <button onclick="window.location.href='index.html'">Inicio</button>
+      <button onclick="window.location.href='foro.html'">Foro</button>
+      <button onclick="window.location.href='news.html'">Novedades</button>
+      <button onclick="window.location.href='shop.html'">Tienda</button>
+      <button id="loginBtn" onclick="window.location.href='login.html'">Iniciar Sesión</button>
+    </nav>
+  </header>
+
+  <div class="shop-container">
+    <div class="card">
+      <h2>Pase VIP</h2>
+      <p>Acceso exclusivo a zonas restringidas, vehículos y armas únicas.</p>
+      <div class="price">💰 149 Robux</div>
+      <button class="buy-btn" onclick="comprar('Pase VIP')">Comprar</button>
+    </div>
+
+    <div class="card">
+      <h2>Pase de Policía Élite</h2>
+      <p>Desbloquea equipo táctico, escudos y acceso a zonas seguras.</p>
+      <div class="price">💰 99 Robux</div>
+      <button class="buy-btn" onclick="comprar('Policía Élite')">Comprar</button>
+    </div>
+
+    <div class="card">
+      <h2>Pase de Criminal</h2>
+      <p>Gana ventajas especiales en fugas, armas y vehículos de escape.</p>
+      <div class="price">💰 79 Robux</div>
+      <button class="buy-btn" onclick="comprar('Criminal')">Comprar</button>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 PRISON LIFE V3 - Comunidad Oficial del Juego
+  </footer>
+
+  <script>
+    function comprar(pase) {
+      alert(`Redirigiendo a la compra del ${pase}...`);
+      // Aquí pondrás el link real de tu pase en Roblox
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const username = localStorage.getItem("username");
+      const userInfo = document.getElementById("userInfo");
+      const userName = document.getElementById("userName");
+      const loginBtn = document.getElementById("loginBtn");
+
+      if (username) {
+        userName.textContent = username;
+        userInfo.style.display = "inline-block";
+        loginBtn.style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>

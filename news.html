@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Novedades - PRISON LIFE V3</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #0a0a0a 20%, #000814 80%);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+      padding-bottom: 50px;
+    }
+
+    header {
+      width: 100%;
+      text-align: center;
+      margin: 30px 0;
+      position: relative;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      color: #00bfff;
+      text-shadow: 0 0 15px #00bfff, 0 0 30px #0077ff;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 10px #0077ff;
+      }
+      to {
+        text-shadow: 0 0 25px #00bfff, 0 0 50px #0077ff;
+      }
+    }
+
+    /* ==== BOTONES LOGIN ==== */
+    .user-controls {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn-login, .btn-register {
+      background-color: #001a33;
+      border: 2px solid #00bfff;
+      color: #00bfff;
+      padding: 6px 15px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-login:hover, .btn-register:hover {
+      background-color: #00bfff;
+      color: #000;
+      box-shadow: 0 0 10px #00bfff, 0 0 20px #0077ff;
+      transform: scale(1.05);
+    }
+
+    .user-info {
+      display: none;
+      color: #00bfff;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .news-container {
+      width: 90%;
+      max-width: 900px;
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      margin-top: 20px;
+    }
+
+    .news-card {
+      background-color: rgba(0, 26, 51, 0.7);
+      border: 2px solid #00bfff;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 0 20px rgba(0, 191, 255, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .news-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 30px rgba(0, 191, 255, 0.5);
+    }
+
+    .news-card h2 {
+      color: #00bfff;
+      margin-bottom: 10px;
+      font-size: 1.5rem;
+    }
+
+    .news-card p {
+      color: #ddd;
+      line-height: 1.6;
+    }
+
+    .date {
+      font-size: 0.9rem;
+      color: #aaa;
+      margin-bottom: 10px;
+    }
+
+    .btn-back {
+      margin-top: 40px;
+      background-color: #001a33;
+      border: 2px solid #00bfff;
+      color: #00bfff;
+      padding: 10px 25px;
+      border-radius: 25px;
+      font-weight: 600;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-back:hover {
+      background-color: #00bfff;
+      color: #000;
+      box-shadow: 0 0 20px #00bfff, 0 0 40px #0077ff;
+      transform: scale(1.05);
+    }
+
+    footer {
+      margin-top: 50px;
+      text-align: center;
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📰 Novedades PRISON LIFE V3</h1>
+
+    <!-- 🔹 Botones de sesión -->
+    <div class="user-controls">
+      <button class="btn-login" id="loginBtn">Iniciar sesión</button>
+      <button class="btn-register" id="registerBtn">Registrarse</button>
+      <div class="user-info" id="userInfo">
+        Bienvenido, <span id="username"></span>
+      </div>
+    </div>
+  </header>
+
+  <div class="news-container">
+    <div class="news-card">
+      <div class="date">24 de Octubre de 2025</div>
+      <h2>Nuevo Sistema de Equipos</h2>
+      <p>Ahora los jugadores podrán unirse a diferentes equipos dentro del juego con habilidades únicas. ¡Explora nuevas estrategias y domina la prisión!</p>
+    </div>
+
+    <div class="news-card">
+      <div class="date">18 de Octubre de 2025</div>
+      <h2>Actualización del Mapa</h2>
+      <p>Se añadieron nuevas zonas de seguridad, un patio mejorado y un túnel secreto que los prisioneros deberán descubrir por sí mismos...</p>
+    </div>
+
+    <div class="news-card">
+      <div class="date">10 de Octubre de 2025</div>
+      <h2>Eventos Semanales</h2>
+      <p>¡Llega el sistema de eventos! Cada semana habrá desafíos con recompensas exclusivas. Compite con tus amigos y gana pases o dinero del juego.</p>
+    </div>
+  </div>
+
+  <button class="btn-back" onclick="volver()">Volver al Inicio</button>
+
+  <footer>
+    © 2025 PRISON LIFE V3 - Comunidad Oficial del Juego
+  </footer>
+
+  <script>
+    function volver() {
+      window.location.href = "index.html";
+    }
+
+    // 🟦 Sistema de usuario base
+    const loginBtn = document.getElementById("loginBtn");
+    const registerBtn = document.getElementById("registerBtn");
+    const userInfo = document.getElementById("userInfo");
+    const usernameSpan = document.getElementById("username");
+
+    // 🔹 Enlaces globales
+    loginBtn.addEventListener("click", () => {
+      window.location.href = "login.html";
+    });
+
+    registerBtn.addEventListener("click", () => {
+      window.location.href = "registrer.html";
+    });
+
+    // 🔹 Mostrar usuario si ya ha iniciado sesión
+    const usuario = localStorage.getItem("usuario");
+    if (usuario) {
+      loginBtn.style.display = "none";
+      registerBtn.style.display = "none";
+      userInfo.style.display = "block";
+      usernameSpan.textContent = usuario;
+    }
+  </script>
+</body>
+</html>

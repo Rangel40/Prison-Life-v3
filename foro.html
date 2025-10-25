@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Foro - PRISON LIFE V3</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #000814, #001a33);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 60px;
+    }
+
+    header {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      border-bottom: 2px solid #00bfff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    header h1 {
+      color: #00bfff;
+      font-size: 2rem;
+      text-shadow: 0 0 15px #0077ff;
+    }
+
+    /* ===== BOTONES / USUARIO ===== */
+    .auth-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .auth-btn, .login-btn {
+      background-color: transparent;
+      border: 2px solid #00bfff;
+      color: #00bfff;
+      padding: 8px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: 0.3s ease;
+      font-weight: 600;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .auth-btn:hover, .login-btn:hover {
+      background-color: #00bfff;
+      color: #000;
+      box-shadow: 0 0 15px #00bfff;
+      transform: scale(1.05);
+    }
+
+    .user-info {
+      display: none; /* se mostrará cuando el usuario haya iniciado sesión */
+      color: #00bfff;
+      font-weight: 600;
+    }
+
+    /* ===== FORO ===== */
+    .search-bar {
+      margin: 25px 0;
+      display: flex;
+      justify-content: center;
+      width: 90%;
+      max-width: 600px;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 25px;
+      border: 2px solid #00bfff;
+      background-color: #001a33;
+      color: #00bfff;
+      outline: none;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .search-bar input:focus {
+      box-shadow: 0 0 10px #00bfff;
+    }
+
+    .forum-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      width: 90%;
+      max-width: 1000px;
+    }
+
+    .topic-card {
+      background-color: #001a33;
+      border: 2px solid #00bfff;
+      border-radius: 15px;
+      padding: 20px;
+      transition: 0.3s ease;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(0, 191, 255, 0.2);
+    }
+
+    .topic-card:hover {
+      box-shadow: 0 0 25px #00bfff, 0 0 50px #0077ff;
+      transform: scale(1.03);
+    }
+
+    .topic-card h3 {
+      color: #00bfff;
+      margin-bottom: 10px;
+      font-size: 1.3rem;
+    }
+
+    .topic-card p {
+      color: #cceeff;
+      font-size: 0.95rem;
+      opacity: 0.8;
+    }
+
+    .new-topic-btn {
+      margin: 30px 0;
+      background-color: #001a33;
+      color: #00bfff;
+      border: 2px solid #00bfff;
+      padding: 12px 25px;
+      border-radius: 25px;
+      font-weight: 600;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .new-topic-btn:hover {
+      background-color: #00bfff;
+      color: #000;
+      box-shadow: 0 0 20px #00bfff, 0 0 40px #0077ff;
+      transform: scale(1.05);
+    }
+
+    footer {
+      margin-top: 50px;
+      text-align: center;
+      font-size: 0.9rem;
+      opacity: 0.6;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>PRISON LIFE V3 - FORO</h1>
+
+    <!-- Zona de autenticación global -->
+    <div class="auth-section">
+      <a href="login.html" class="login-btn" id="loginBtn">Iniciar Sesión</a>
+      <a href="registrer.html" class="auth-btn" id="registerBtn">Registrarse</a>
+
+      <!-- Visible solo tras el login -->
+      <span class="user-info" id="userInfo">👤 Usuario: <strong id="username">Player123</strong></span>
+    </div>
+  </header>
+
+  <div class="search-bar">
+    <input type="text" id="search" placeholder="Buscar temas del foro..." />
+  </div>
+
+  <div class="forum-container" id="forumContainer">
+    <div class="topic-card">
+      <h3>Sugerencias de jugadores</h3>
+      <p>Propón nuevas ideas, mejoras o características que te gustaría ver en el juego.</p>
+    </div>
+    <div class="topic-card">
+      <h3>Reportes de errores</h3>
+      <p>Ayúdanos a mantener el juego estable reportando bugs o fallos.</p>
+    </div>
+    <div class="topic-card">
+      <h3>Eventos y novedades</h3>
+      <p>Comparte y descubre próximos eventos dentro del juego.</p>
+    </div>
+    <div class="topic-card">
+      <h3>Chat general</h3>
+      <p>Habla con otros jugadores sobre cualquier tema relacionado con PRISON LIFE V3.</p>
+    </div>
+  </div>
+
+  <button class="new-topic-btn" onclick="crearTema()">+ Crear nuevo tema</button>
+
+  <footer>© 2025 PRISON LIFE V3 - Comunidad del Juego</footer>
+
+  <script>
+    // 🔹 Control global del usuario (igual que en index.html)
+    document.addEventListener("DOMContentLoaded", () => {
+      const username = localStorage.getItem("username");
+      const loginBtn = document.getElementById("loginBtn");
+      const registerBtn = document.getElementById("registerBtn");
+      const userInfo = document.getElementById("userInfo");
+      const usernameDisplay = document.getElementById("username");
+
+      if (username) {
+        loginBtn.style.display = "none";
+        registerBtn.style.display = "none";
+        userInfo.style.display = "inline";
+        usernameDisplay.textContent = username;
+      }
+    });
+
+    // 🔹 Búsqueda
+    const searchInput = document.getElementById('search');
+    const cards = document.querySelectorAll('.topic-card');
+
+    searchInput.addEventListener('input', () => {
+      const text = searchInput.value.toLowerCase();
+      cards.forEach(card => {
+        const title = card.querySelector('h3').textContent.toLowerCase();
+        card.style.display = title.includes(text) ? 'block' : 'none';
+      });
+    });
+
+    function crearTema() {
+      alert("Función para crear nuevo tema (próximamente).");
+    }
+  </script>
+</body>
+</html>
